@@ -1,0 +1,45 @@
+{
+  "items": [
+    {
+      "q": "What does a payment gateway do?",
+      "a": "A payment gateway handles payment card transactions on a merchant's behalf. In standard industry definitions, it's essentially another name for a payment processor or payment service provider, not a separate category of function. It's distinct from an acquirer, which is the financial institution that processes card transactions for merchants and is recognised as an acquirer by a payment brand.",
+      "sources": [
+        "S1"
+      ],
+      "unsupported": null
+    },
+    {
+      "q": "What does a payment orchestration layer add on top of one or more gateways?",
+      "a": "An orchestration layer sits above one or more gateways and integrates multiple payment service providers, gateways and payment methods into a single platform. Where a gateway only provides a means of access to payment processing, orchestration adds the ability to route, retry and reconcile transactions centrally across those providers. This lets you manage several payment paths from one system instead of working with each gateway separately.",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "unsupported": null
+    },
+    {
+      "q": "How much do approval rates improve after adding orchestration?",
+      "a": "Solidgate states that orchestration can lift approval rates by 10-30% using the same providers you already have. It does not publish the methodology, sample size or measurement period behind that range, so treat the figure as a vendor estimate rather than a verified benchmark. Test it against your own transaction data before using it in a business case.",
+      "sources": [
+        "S3"
+      ],
+      "unsupported": null
+    },
+    {
+      "q": "What is the difference between authorisation rate and approval rate?",
+      "a": "Authorisation rate is the percentage of card authorisation requests approved by the issuing bank, calculated as approved authorisations divided by total authorisation attempts. Approval rate is broader: it also counts transactions recovered through retries, failover or alternative payment methods after an initial decline. Because of that, approval rate is always equal to or higher than the first-attempt authorisation rate.",
+      "sources": [
+        "S4"
+      ],
+      "unsupported": null
+    },
+    {
+      "q": "When does a merchant not need orchestration?",
+      "a": "You may not need orchestration if your payment volume falls below the point where the added routing and reconciliation work pays off. Solidgate states that orchestration pays for itself above roughly $400,000 processed per month across multiple markets. Below that volume, or if you operate in a single market, adding a layer on top of your existing gateway may not be worth it.",
+      "sources": [
+        "S3"
+      ],
+      "unsupported": null
+    }
+  ]
+}

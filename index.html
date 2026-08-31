@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yulia Boldyreva — a fact-check gate for AI-written content</title>
+<meta name="description" content="An editorial pipeline that turns one brief into checked, structured content — and refuses to publish claims no source supports.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F9F5;
+  --band:#DFEBDB;
+  --ink:#0E1710;
+  --muted:#5A6B5C;
+  --rule:#B9CDB5;
+  --stamp:#4A2E7F;
+  --strike:#8A3B2E;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:Archivo,system-ui,sans-serif;font-size:16.5px;line-height:1.6;
+}
+.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 5rem}
+h1,h2{font-weight:700;letter-spacing:-.02em;line-height:1.08;margin:0}
+a{color:inherit}
+::selection{background:var(--band)}
+.mono{font-family:"IBM Plex Mono",monospace}
+
+/* perforated edge */
+.edge{
+  height:26px;background:
+    repeating-linear-gradient(to right,transparent 0 14px,var(--rule) 14px 15px) center/100% 1px no-repeat,
+    repeating-linear-gradient(to right,var(--paper) 0 22px,var(--band) 22px 24px);
+  border-bottom:1px solid var(--rule);
+}
+
+header{padding:3.5rem 0 2.5rem;border-bottom:2px solid var(--ink)}
+.slug{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem
+}
+h1{font-size:clamp(1.9rem,4.6vw,2.9rem);max-width:22ch}
+.standfirst{max-width:52ch;color:var(--muted);margin:1.4rem 0 0;font-size:1.02rem}
+
+/* specimen */
+.specimen{margin:0;padding:2.25rem 0;border-bottom:1px solid var(--rule)}
+.qline{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 1.1rem
+}
+.answer{max-width:60ch;font-size:1.05rem;margin:0}
+.answer s{
+  text-decoration:line-through;text-decoration-color:var(--strike);
+  text-decoration-thickness:2px;color:var(--muted)
+}
+.marginal{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--strike);
+  margin:.9rem 0 0;letter-spacing:.02em
+}
+.caption{color:var(--muted);font-size:.95rem;max-width:58ch;margin:1.4rem 0 0}
+
+section{padding:2.75rem 0;border-bottom:1px solid var(--rule)}
+.head{
+  display:grid;grid-template-columns:5.5rem 1fr;gap:1.25rem;align-items:baseline;margin-bottom:1.25rem
+}
+.num{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h2{font-size:1.4rem}
+.body{max-width:58ch}
+p{margin:0 0 1rem}
+p:last-child{margin-bottom:0}
+
+/* greenbar ledger */
+.ledger{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",monospace;font-size:13px;margin-top:.5rem}
+.ledger th{
+  text-align:left;font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);padding:.5rem .75rem;border-bottom:1px solid var(--ink)
+}
+.ledger td{padding:.55rem .75rem;vertical-align:top}
+.ledger tbody tr:nth-child(odd){background:var(--band)}
+.ledger td.v{white-space:nowrap;font-weight:500}
+.ledger td.v.no{color:var(--strike)}
+.ledger td.n{white-space:nowrap;color:var(--muted)}
+.total{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+  border-top:2px solid var(--ink);padding-top:.6rem;margin-top:0;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem
+}
+
+/* stamps */
+.stamps{display:flex;flex-wrap:wrap;gap:2.5rem;margin:1.75rem 0 .5rem;align-items:flex-start}
+.runbox{flex:1 1 16rem}
+.stamp{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:13px;letter-spacing:.18em;padding:.4rem .8rem;
+  border:2px solid var(--stamp);color:var(--stamp);
+  transform:rotate(-3deg);opacity:.9;margin-bottom:1rem
+}
+.stamp.pass{transform:rotate(2deg)}
+.runbox ul{margin:0;padding-left:1.1rem;color:var(--muted);font-size:.93rem}
+.runbox li{margin-bottom:.45rem}
+
+ol.stages{list-style:none;margin:0;padding:0;counter-reset:s;font-size:.97rem}
+ol.stages li{
+  counter-increment:s;display:grid;grid-template-columns:2rem 1fr;gap:.9rem;
+  padding:.7rem 0;border-bottom:1px solid var(--rule)
+}
+ol.stages li:last-child{border-bottom:0}
+ol.stages li::before{content:counter(s,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted)}
+ol.stages b{font-weight:500}
+ol.stages span{grid-column:2;display:block;color:var(--muted);font-size:.93rem;margin-top:.15rem}
+
+blockquote{margin:0;max-width:52ch;font-size:1.2rem;line-height:1.45}
+blockquote cite{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-style:normal;color:var(--muted);margin-top:1rem
+}
+
+.links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.25rem}
+.links a{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.06em;
+  text-decoration:none;border:1.5px solid var(--ink);padding:.6rem 1rem;
+  transition:background .15s,color .15s
+}
+.links a:hover,.links a:focus-visible{background:var(--ink);color:var(--paper)}
+a:focus-visible{outline:2px solid var(--stamp);outline-offset:3px}
+
+
+.faq{border-top:1px solid var(--rule);margin-top:.5rem}
+.faq .item{padding:1.4rem 0;border-bottom:1px solid var(--rule)}
+.faq h3{
+  font-size:1.02rem;font-weight:500;margin:0 0 .6rem;max-width:56ch;
+}
+.faq p{max-width:62ch;margin:0;font-size:.98rem}
+.faq .src{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin:.7rem 0 0
+}
+.gap{
+  background:var(--band);padding:1rem 1.1rem;font-size:.94rem;color:var(--ink);
+  border-left:3px solid var(--stamp)
+}
+.gap b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.45rem;color:var(--stamp)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;padding:1.4rem 0;border-bottom:1px solid var(--rule)}
+.cmp .q{grid-column:1/-1;font-size:1.02rem;font-weight:500;margin:0 0 .2rem;max-width:60ch}
+.collabel{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:.5rem
+}
+.cmp p.t{margin:0;font-size:.95rem;line-height:1.6}
+.cmp .before p.t{color:var(--muted)}
+del{text-decoration:line-through;text-decoration-color:var(--strike);text-decoration-thickness:1.5px}
+ins{text-decoration:none;background:var(--band);box-shadow:0 1.5px 0 var(--stamp);padding:0 .12em}
+.editnote{
+  grid-column:1/-1;font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.65;
+  color:var(--ink);border-left:3px solid var(--stamp);padding:.55rem 0 .55rem .9rem;margin:.35rem 0 0;max-width:70ch
+}
+.editnote b{
+  display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--stamp);font-weight:500;margin-bottom:.35rem
+}
+.unchanged{padding:1.4rem 0;border-bottom:1px solid var(--rule)}
+.unchanged h3{font-size:1.02rem;font-weight:500;margin:0 0 .5rem;max-width:60ch}
+.unchanged p{margin:0;font-size:.95rem;max-width:64ch}
+.unchanged .collabel{margin-bottom:.6rem}
+@media (max-width:760px){.cmp{grid-template-columns:1fr;gap:1.1rem}}
+
+footer{padding:1.75rem 0 0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted)}
+
+@media (max-width:700px){
+  .head{grid-template-columns:1fr;gap:.35rem}
+  .ledger td.n{display:none}
+  .ledger th:nth-child(2){display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .stamp{animation:press .45s cubic-bezier(.2,1.4,.4,1) .6s both}
+  @keyframes press{from{transform:rotate(-3deg) scale(1.5);opacity:0}to{opacity:.9}}
+  .stamp.pass{animation-delay:.85s}
+}
+</style>
+</head>
+<body>
+<div class="edge"></div>
+<div class="wrap">
+
+<header>
+  <div class="slug">
+    <span>Yulia Boldyreva — editorial systems for AI-written content</span>
+    <span>Novi Sad</span>
+  </div>
+  <h1>Agentic content pipelines with a human editor in the loop</h1>
+  <p class="standfirst">I built a pipeline that takes a single editorial brief and produces fact-checked, structured content that search engines and language models can cite. When a claim turns out to have no source behind it, the pipeline stops the piece before anyone can publish it.</p>
+</header>
+
+
+
+<section>
+  <div class="head"><span class="num">01</span><h2>The brief and its sources</h2></div>
+  <div class="body">
+    <p>The brief holds the questions the piece has to answer, the rules for its voice, and a numbered list of sources, each with a line I wrote saying what that source is allowed to support. Nothing outside that list is admissible: the drafting step can't use anything else, and the checking step is told plainly that whatever the model happens to know does not count as evidence.</p>
+    <p>If a question can't be answered from those sources, it comes back empty along with a note explaining what evidence would be needed to answer it. Deciding what counts as a source is a judgement I make before anything is generated, and it stays with me rather than with the model.</p>
+  </div>
+</section>
+
+<div class="specimen">
+  <p class="qline">What that looks like — draft answer to Q3, before checking</p>
+  <p class="answer">Solidgate states that orchestration can lift approval rates by 10–30% using the same providers you already have. It does not publish the methodology, sample size or measurement period behind that range. <s>Test it against your own transaction data before using it in a business case.</s></p>
+  <p class="marginal">C10 · advisory · unsupported · no source in the pack gives this advice</p>
+  <p class="caption">The model added that last sentence on its own, and none of the four sources in the brief say anything of the kind. It’s harmless here, since a vendor would probably compare their own figures against whatever is found in the wild anyway. However, the same move in a piece on a more demanding subject would hand a reader something they could act on and be wrong about, and the pipeline already takes that possibility into account.</p>
+</div>
+
+<section>
+  <div class="head"><span class="num">02</span><h2>What happened over two runs</h2></div>
+  <div class="body">
+    <p>The first run was blocked because four of its claims had nothing behind them, and three of those four turned out to be advice to the reader rather than statements of fact. I had expected to catch an invented statistic, but what the model produced instead was guidance, written into answers that were otherwise accurate and properly sourced, which is considerably harder to notice while reading.</p>
+  </div>
+  <div class="stamps">
+    <div class="runbox">
+      <span class="stamp">Run 1 · Blocked</span>
+      <ul>
+        <li>Test it against your own transaction data before using it in a business case.</li>
+        <li>You may not need orchestration if your volume falls below the point where the routing work pays off.</li>
+        <li>Below that volume, or in a single market, adding a layer may not be worth it.</li>
+      </ul>
+    </div>
+    <div class="runbox">
+      <span class="stamp pass">Run 2 · Review</span>
+      <ul>
+        <li>Sixteen claims, each of them traced back to a source.</li>
+        <li>One question left unanswered, with a note naming the evidence that was missing.</li>
+        <li>Search markup written only for the copy that cleared the gate.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="head"><span class="num">03</span><h2>How each claim was checked</h2></div>
+  <table class="ledger">
+    <thead><tr><th>Claim</th><th>Type</th><th>Verdict</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>A payment gateway handles payment card transactions on a merchant's behalf.</td><td class="n">definitional</td><td class="v">supported</td><td class="n">S1</td></tr>
+      <tr><td>A gateway is not a system for tailoring or optimising payment flows.</td><td class="n">definitional</td><td class="v">supported</td><td class="n">S2</td></tr>
+      <tr><td>Solidgate states orchestration can lift approval rates by 10–30%.</td><td class="n">attributive</td><td class="v">supported</td><td class="n">S3</td></tr>
+      <tr><td>Approval rate is always equal to or higher than first-attempt authorisation rate.</td><td class="n">comparative</td><td class="v">supported</td><td class="n">S4</td></tr>
+      <tr><td>Test it against your own transaction data before using it in a business case.</td><td class="n">advisory</td><td class="v no">unsupported</td><td class="n">—</td></tr>
+    </tbody>
+  </table>
+  <p class="total"><span>An extract from the first run, which checked sixteen claims in all</span><span>Each claim is checked in a separate call of its own</span></p>
+</section>
+
+<section>
+  <div class="head"><span class="num">04</span><h2>The four steps</h2></div>
+  <ol class="stages">
+    <li><b>Draft</b><span>The answers are written from the brief and the sources it carries, with nothing else available to the model.</span></li>
+    <li><b>Split</b><span>The finished copy is broken into individual claims, and each one is labelled by what kind of claim it is.</span></li>
+    <li><b>Check</b><span>Every claim is checked separately against the source list, by a step that never sees the drafting instructions and so can't inherit their assumptions.</span></li>
+    <li><b>Gate</b><span>The decision to publish, review or block is made by rules written in code rather than by a model, so the same inputs always produce the same answer.</span></li>
+  </ol>
+  <p class="caption">The prompts are kept as numbered files rather than edited in place, so the drafting prompt has four versions and the reason I replaced each one is written down beside it in the repository.</p>
+</section>
+
+<section>
+  <div class="head"><span class="num">05</span><h2>From draft to published</h2></div>
+  <div class="body">
+    <p>The pipeline produces a draft that has passed its fact-check, which is not the same as copy that reads well. Below is what the pipeline wrote, what I changed, and why. My edited version went back through the check afterwards, because copy that skips the gate defeats the point of having one.</p>
+  </div>
+
+  <div class="cmp">
+    <p class="q">What does a payment gateway do?</p>
+    <div class="before"><span class="collabel">Pipeline draft</span>
+      <p class="t">A payment gateway <del>handles payment card transactions on a merchant's behalf</del>. <del>In standard industry definitions, it's</del> essentially another name for a payment processor or payment service provider<del>, not a separate category of function</del>. It's distinct from an acquirer, which is the financial institution that processes card transactions for merchants and <del>is defined by a payment brand as an acquirer</del>.</p>
+    </div>
+    <div class="after"><span class="collabel">After editing</span>
+      <p class="t">A payment gateway <ins>handles your card transactions for you</ins>. <ins>It's</ins> essentially another name for a payment processor or payment service provider. It's distinct from an acquirer, which is the financial institution that processes card transactions for merchants and <ins>is formally defined as such by a payment brand</ins>.</p>
+    </div>
+    <p class="editnote"><b>Editor’s note</b>The first sentence answered the question, just not in words anyone would use, so I simplified it. "In standard industry definitions" — does the reader care? "Not a separate category of function" is machine speech. And an acquirer defined as an acquirer reads awful.</p>
+  </div>
+
+  <div class="cmp">
+    <p class="q">What does a payment orchestration layer add on top of a gateway?</p>
+    <div class="before"><span class="collabel">Pipeline draft</span>
+      <p class="t"><del>Question: what does an orchestration layer add on top of one or more gateways?</del><br><br>An orchestration layer integrates multiple payment service providers, gateways and payment methods into a single platform. A gateway provides a means of access to payment processing; it is not a system for tailoring or optimising payment flows. <del>Solidgate</del> describes orchestration as routing, retrying and reconciling transactions centrally across multiple providers.</p>
+    </div>
+    <div class="after"><span class="collabel">After editing</span>
+      <p class="t"><ins>Question: what does an orchestration layer add on top of a gateway?</ins><br><br>An orchestration layer integrates multiple payment service providers, gateways and payment methods into a single platform. A gateway provides a means of access to payment processing; it is not a system for tailoring or optimising payment flows. <ins><a href="https://solidgate.com/blog/payment-orchestration/">Solidgate</a>, a payments vendor,</ins> describes orchestration as routing, retrying and reconciling transactions centrally across multiple providers.</p>
+    </div>
+    <p class="editnote"><b>Editor’s note</b>"One or more gateways" is needlessly specific for a question someone would actually type. Solidgate also turns up out of nowhere, so I clarified who they actually are and added a link to the source.</p>
+  </div>
+
+  <div class="cmp">
+    <p class="q">How much do approval rates improve after adding orchestration?</p>
+    <div class="before"><span class="collabel">Pipeline draft</span>
+      <p class="t">Solidgate states that orchestration can lift approval rates by 10&ndash;30% using the same providers you already have. <del>It does not publish</del> the methodology, sample size or measurement period behind that range, so <del>the figure is a vendor claim rather than a measured benchmark</del>.</p>
+    </div>
+    <div class="after"><span class="collabel">After editing</span>
+      <p class="t">Solidgate states that orchestration can lift approval rates by 10&ndash;30% using the same providers you already have. <ins>They don't share</ins> the methodology, sample size or measurement period behind that range, so <ins>keep in mind that it's a vendor's estimate rather than a measured benchmark</ins>.</p>
+    </div>
+    <p class="editnote"><b>Editor’s note</b>"It does not publish" is clumsy, and "they don't share" is plainer — it's clear from the context that we're still talking about Solidgate. The ending was too dry, so I clarified it in simpler words.</p>
+  </div>
+
+  <div class="unchanged">
+    <span class="collabel">Published unchanged</span>
+    <h3>What is the difference between authorisation rate and approval rate?</h3>
+    <p>Authorisation rate is the percentage of card authorisation requests approved by the issuing bank, calculated as approved authorisations divided by total authorisation attempts. Approval rate is broader: it also counts transactions recovered through retries, failover or alternative payment methods after an initial decline. Because of that, approval rate is always equal to or higher than the first-attempt authorisation rate.</p>
+  </div>
+
+  <div class="unchanged">
+    <span class="collabel">Not published</span>
+    <h3>When does a merchant not need orchestration?</h3>
+    <p class="gap"><b>No answer</b>I simply couldn’t answer this from the evidence pack. The only related figure is Solidgate’s $400,000 monthly threshold, which says when orchestration pays off, not when it doesn’t. To answer it properly I’d need a source about smaller or single-market merchants, and until I have one, I’d rather skip than lie.</p>
+  </div>
+
+</section>
+
+<section>
+  <div class="head"><span class="num">06</span><h2>The repository</h2></div>
+  <div class="body">
+    <p>Everything is public: the scripts, the prompts with their version history, both sample runs with every claim and its verdict, and the notes recording what I changed between the two runs and why. Most of the prompt work I do is covered by NDA or belongs to my employers, so I built this one from scratch on a neutral topic in order to have something I could actually show.</p>
+  </div>
+  <div class="links">
+    <a href="https://github.com/Iennahen/brief-to-geo">Repository →</a>
+    <a href="mailto:iennahen@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/yulia-boldyreva-93316b234/">LinkedIn</a>
+  </div>
+</section>
+
+<footer>Built in August 2026. Every source in the brief was read and verified by hand on 30 August 2026.</footer>
+</div>
+</body>
+</html>

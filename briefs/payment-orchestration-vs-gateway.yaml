@@ -1,0 +1,94 @@
+id: payment-orchestration-vs-gateway
+title: "Payment orchestration vs payment gateway"
+
+audience: >
+  Product and payments leads at mid-market merchants working out whether they
+  need an orchestration layer on top of the gateway they already have.
+
+search_intent: commercial-investigation
+primary_keyword: "payment orchestration vs payment gateway"
+
+
+voice:
+  register: plain professional
+  person: second
+
+  banned_phrases:
+    - "game-changer"
+    - "unlock"
+    - "leverage"
+    - "empower"
+    - "robust"
+    - "best-in-class"
+    - "streamline"
+    - "revolutionise"
+
+  rules:
+    - No superlatives about any named vendor.
+    - No forward-looking market predictions.
+    - Numbers appear only if a source below supports them.
+    - Attribute vendor claims to the vendor by name.
+
+
+sources:
+
+  - id: S1
+    title: "PCI Security Standards Council — Glossary of Payment and Information Security Terms"
+    url: "https://www.pcisecuritystandards.org/glossary/"
+    kind: primary
+    checked: "2026-08-30"
+    evidence: >
+      The PCI Security Standards Council's glossary treats "payment gateway" as an
+      alternative name for a payment processor or payment service provider: an entity
+      a merchant engages to handle payment card transactions on its behalf. It defines
+      an acquirer separately, as the financial institution that processes card
+      transactions for merchants and is defined by a payment brand as an acquirer.
+
+  - id: S2
+    title: "Payment orchestration — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Payment_orchestration"
+    kind: secondary
+    checked: "2026-08-30"
+    evidence: >
+      Payment orchestration integrates multiple payment service providers, gateways and
+      payment methods into a single platform. It is distinct from a payment gateway,
+      which is narrower in scope: a gateway provides a means of access to payment
+      processing but is not a system for tailoring or optimising payment flows.
+
+  - id: S3
+    title: "Solidgate — What Is Payment Orchestration? Complete Guide"
+    url: "https://solidgate.com/blog/payment-orchestration/"
+    kind: vendor
+    checked: "2026-08-30"
+    evidence: >
+      Solidgate, a payments vendor, describes orchestration as routing, retrying and
+      reconciling transactions centrally across multiple providers. It claims
+      approval-rate gains of 10-30% using the same providers, and that orchestration
+      pays for itself above roughly $400,000 processed per month across multiple
+      markets. Neither figure is accompanied by a published methodology, sample or
+      measurement period.
+
+  - id: S4
+    title: "PXP — Authorisation Rate: Definition, How It Works"
+    url: "https://www.pxp.io/pxp-glossary/authorisation-rate"
+    kind: vendor
+    checked: "2026-08-30"
+    evidence: >
+      Authorisation rate is the percentage of card authorisation requests approved by
+      the issuing bank: approved authorisations divided by total authorisation
+      attempts. Approval rate is a broader measure that also counts transactions
+      recovered through retries, failover or alternative payment methods after an
+      initial decline, and is therefore always equal to or higher than the
+      first-attempt authorisation rate.
+
+
+must_cover:
+  - What does a payment gateway do?
+  - What does a payment orchestration layer add on top of one or more gateways?
+  - How much do approval rates improve after adding orchestration?
+  - What is the difference between authorisation rate and approval rate?
+  - When does a merchant not need orchestration?
+
+do_not_cover:
+  - Pricing of any named vendor.
+  - Regulatory advice or compliance guarantees.

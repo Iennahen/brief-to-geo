@@ -1,0 +1,146 @@
+[
+  {
+    "id": "C1",
+    "text": "A payment gateway handles payment card transactions on a merchant's behalf.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 states a payment gateway is an entity a merchant engages to handle payment card transactions on its behalf."
+  },
+  {
+    "id": "C2",
+    "text": "In standard industry definitions, a payment gateway is essentially another name for a payment processor or payment service provider, not a separate category of function.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1's glossary explicitly treats 'payment gateway' as an alternative name for a payment processor or payment service provider, matching the claim."
+  },
+  {
+    "id": "C3",
+    "text": "A payment gateway is distinct from an acquirer.",
+    "type": "comparative",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 defines payment gateway as a processor/PSP handling transactions on behalf of merchants, while separately defining acquirer as the financial institution that processes card transactions and is designated by a payment brand, treating them as distinct entities."
+  },
+  {
+    "id": "C4",
+    "text": "An acquirer is the financial institution that processes card transactions for merchants.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 defines an acquirer as the financial institution that processes card transactions for merchants, matching the claim verbatim."
+  },
+  {
+    "id": "C5",
+    "text": "An acquirer is defined by a payment brand as an acquirer.",
+    "type": "attributive",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 explicitly states an acquirer is defined by a payment brand as an acquirer."
+  },
+  {
+    "id": "C6",
+    "text": "An orchestration layer integrates multiple payment service providers, gateways and payment methods into a single platform.",
+    "type": "definitional",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S2",
+    "reasoning": "S2 states verbatim that payment orchestration integrates multiple payment service providers, gateways and payment methods into a single platform."
+  },
+  {
+    "id": "C7",
+    "text": "A gateway provides a means of access to payment processing.",
+    "type": "definitional",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S2",
+    "reasoning": "S2 explicitly states that a gateway provides a means of access to payment processing."
+  },
+  {
+    "id": "C8",
+    "text": "A gateway is not a system for tailoring or optimising payment flows.",
+    "type": "definitional",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S2",
+    "reasoning": "S2 states verbatim that a gateway provides access to payment processing but is not a system for tailoring or optimising payment flows."
+  },
+  {
+    "id": "C9",
+    "text": "Solidgate describes orchestration as routing, retrying and reconciling transactions centrally across multiple providers.",
+    "type": "attributive",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 states verbatim that Solidgate describes orchestration as routing, retrying and reconciling transactions centrally across multiple providers."
+  },
+  {
+    "id": "C10",
+    "text": "Solidgate states that orchestration can lift approval rates by 10-30% using the same providers you already have.",
+    "type": "numeric",
+    "location": "q3",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 attributes to Solidgate the claim that orchestration lifts approval rates by 10-30% using the same providers already in use."
+  },
+  {
+    "id": "C11",
+    "text": "Solidgate does not publish the methodology, sample size or measurement period behind that range.",
+    "type": "attributive",
+    "location": "q3",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 explicitly states that neither the 10-30% figure nor the $400,000 threshold is accompanied by a published methodology, sample or measurement period."
+  },
+  {
+    "id": "C12",
+    "text": "The figure is a vendor claim rather than a measured benchmark.",
+    "type": "advisory",
+    "location": "q3",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 explicitly attributes the 10-30% approval-rate and $400,000 breakeven figures to a vendor (Solidgate) and notes neither is backed by a published methodology or measurement, indicating vendor claims rather than measured benchmarks."
+  },
+  {
+    "id": "C13",
+    "text": "Authorisation rate is the percentage of card authorisation requests approved by the issuing bank.",
+    "type": "definitional",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly defines authorisation rate as the percentage of card authorisation requests approved by the issuing bank."
+  },
+  {
+    "id": "C14",
+    "text": "Authorisation rate is calculated as approved authorisations divided by total authorisation attempts.",
+    "type": "numeric",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly defines authorisation rate as approved authorisations divided by total authorisation attempts."
+  },
+  {
+    "id": "C15",
+    "text": "Approval rate also counts transactions recovered through retries, failover or alternative payment methods after an initial decline.",
+    "type": "definitional",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly defines approval rate as a broader measure that includes transactions recovered through retries, failover or alternative payment methods after an initial decline."
+  },
+  {
+    "id": "C16",
+    "text": "Approval rate is always equal to or higher than the first-attempt authorisation rate.",
+    "type": "comparative",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly states approval rate is always equal to or higher than the first-attempt authorisation rate."
+  }
+]

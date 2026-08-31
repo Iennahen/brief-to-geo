@@ -1,0 +1,145 @@
+[
+  {
+    "id": "C1",
+    "text": "A payment gateway handles payment card transactions on a merchant's behalf.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 states that a payment gateway is an entity a merchant engages to handle payment card transactions on its behalf."
+  },
+  {
+    "id": "C2",
+    "text": "In standard industry definitions, a payment gateway is essentially another name for a payment processor or payment service provider, not a separate category of function.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1's glossary explicitly treats payment gateway as an alternative name for a payment processor or payment service provider, matching the claim."
+  },
+  {
+    "id": "C3",
+    "text": "A payment gateway is distinct from an acquirer, which is the financial institution that processes card transactions for merchants and is recognised as an acquirer by a payment brand.",
+    "type": "definitional",
+    "location": "q1",
+    "verdict": "supported",
+    "source_id": "S1",
+    "reasoning": "S1 defines the acquirer exactly this way and separately treats payment gateway as distinct (a processor/PSP), matching the claim."
+  },
+  {
+    "id": "C4",
+    "text": "An orchestration layer sits above one or more gateways and integrates multiple payment service providers, gateways and payment methods into a single platform.",
+    "type": "definitional",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S2",
+    "reasoning": "S2 states that payment orchestration integrates multiple payment service providers, gateways and payment methods into a single platform, matching the claim."
+  },
+  {
+    "id": "C5",
+    "text": "Where a gateway only provides a means of access to payment processing, orchestration adds the ability to route, retry and reconcile transactions centrally across those providers.",
+    "type": "comparative",
+    "location": "q2",
+    "verdict": "unsupported",
+    "source_id": "S2",
+    "reasoning": "S2 states a gateway is narrower in scope than orchestration but never mentions routing, retrying or reconciling, and S3 describes those orchestration capabilities without contrasting them to a gateway's limited access role, so no single source carries the full comparative claim."
+  },
+  {
+    "id": "C6",
+    "text": "Orchestration lets you manage several payment paths from one system instead of working with each gateway separately.",
+    "type": "advisory",
+    "location": "q2",
+    "verdict": "supported",
+    "source_id": "S2",
+    "reasoning": "S2 states payment orchestration integrates multiple payment service providers, gateways and payment methods into a single platform, matching the claim."
+  },
+  {
+    "id": "C7",
+    "text": "Solidgate states that orchestration can lift approval rates by 10-30% using the same providers you already have.",
+    "type": "attributive",
+    "location": "q3",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 attributes to Solidgate the claim that orchestration lifts approval rates 10-30% using the same providers, matching the claim exactly."
+  },
+  {
+    "id": "C8",
+    "text": "Solidgate does not publish the methodology, sample size or measurement period behind that range.",
+    "type": "attributive",
+    "location": "q3",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 explicitly states that the 10-30% approval-rate figure is not accompanied by a published methodology, sample or measurement period."
+  },
+  {
+    "id": "C9",
+    "text": "Treat the figure as a vendor estimate rather than a verified benchmark.",
+    "type": "advisory",
+    "location": "q3",
+    "verdict": "partial",
+    "source_id": "S3",
+    "reasoning": "S3 presents its 10-30% and $400,000 figures without published methodology, sample, or measurement period, which supports treating them as unverified vendor claims but does not itself state the advisory framing."
+  },
+  {
+    "id": "C10",
+    "text": "Test it against your own transaction data before using it in a business case.",
+    "type": "advisory",
+    "location": "q3",
+    "verdict": "unsupported",
+    "reasoning": "No source gives this advisory about testing figures against one's own transaction data before use in a business case."
+  },
+  {
+    "id": "C11",
+    "text": "Authorisation rate is the percentage of card authorisation requests approved by the issuing bank, calculated as approved authorisations divided by total authorisation attempts.",
+    "type": "definitional",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 states the exact same definition: authorisation rate is the percentage of card authorisation requests approved by the issuing bank, calculated as approved authorisations divided by total authorisation attempts."
+  },
+  {
+    "id": "C12",
+    "text": "Approval rate also counts transactions recovered through retries, failover or alternative payment methods after an initial decline.",
+    "type": "definitional",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly defines approval rate as a broader measure that also counts transactions recovered through retries, failover or alternative payment methods after an initial decline."
+  },
+  {
+    "id": "C13",
+    "text": "Approval rate is always equal to or higher than the first-attempt authorisation rate.",
+    "type": "comparative",
+    "location": "q4",
+    "verdict": "supported",
+    "source_id": "S4",
+    "reasoning": "S4 explicitly states that approval rate, which counts recoveries after decline, is therefore always equal to or higher than the first-attempt authorisation rate."
+  },
+  {
+    "id": "C14",
+    "text": "You may not need orchestration if your payment volume falls below the point where the added routing and reconciliation work pays off.",
+    "type": "advisory",
+    "location": "q5",
+    "verdict": "unsupported",
+    "source_id": "S3",
+    "reasoning": "S3 states orchestration pays off above ~$400,000/month, but a source describing what happens above a threshold supports nothing about below it, so the claim about not needing orchestration below that point is unsupported."
+  },
+  {
+    "id": "C15",
+    "text": "Solidgate states that orchestration pays for itself above roughly $400,000 processed per month across multiple markets.",
+    "type": "attributive",
+    "location": "q5",
+    "verdict": "supported",
+    "source_id": "S3",
+    "reasoning": "S3 attributes to Solidgate the exact claim that orchestration pays for itself above roughly $400,000 processed per month across multiple markets."
+  },
+  {
+    "id": "C16",
+    "text": "Below that volume, or if you operate in a single market, adding a layer on top of your existing gateway may not be worth it.",
+    "type": "advisory",
+    "location": "q5",
+    "verdict": "unsupported",
+    "source_id": "S3",
+    "reasoning": "S3 only states orchestration pays off above ~$400,000/month across multiple markets; it does not state anything about what happens below that threshold or in a single market, and inverting a threshold claim is unsupported."
+  }
+]
